@@ -1,11 +1,15 @@
 # garden-quest
-Garden Quest - A Game Boy game made with [GBDK](https://github.com/gbdk-2020/gbdk-2020/). 
+Garden Quest - A Game Boy game made with [GBDK](https://github.com/gbdk-2020/gbdk-2020/) and [ZGB](https://github.com/Zal0/ZGB). 
 
 
 
 ### Build Instructions
 
-Create SDCCDIR environment variable, that points into the folder, where you installed sdcc
+Create `SDCCDIR` environment variable, that points into the folder where you installed SDCC, `SDCCDIR=/usr` in most cases. 
+
+Compile [GBDK](https://github.com/gbdk-2020/gbdk-2020/) 
+
+Compile [ZGB](https://github.com/Zal0/ZGB) and set `ZGB_PATH`
 
 
 
