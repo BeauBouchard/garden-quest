@@ -1,8 +1,8 @@
 AS = lcc -c
 CC = lcc -Wa-l -Wl-m
 
-BIN = move_sprite.gb
-OBJS = move_sprite.o ufo.o
+BIN = movement.gb
+OBJS = movement.o player.o
 
 all: $(BIN)
 
