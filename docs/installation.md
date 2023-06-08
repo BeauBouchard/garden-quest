@@ -23,13 +23,12 @@ Change to the sdcc directory and copy all files to /usr/local
     cp -r * /usr/local
 ```
 
-
-This will install sdcc binaries into: /usr/local/bin/
-header files into:                    /usr/local/share/sdcc/include/
-non-free header files into:           /usr/local/share/sdcc/non-free/include/
-library files into:                   /usr/local/share/sdcc/lib/
-non-free library files into:          /usr/local/share/sdcc/non-free/lib/
-and documentation into:               /usr/local/share/sdcc/doc/
+  * This will install sdcc binaries into `/usr/local/bin/`
+  * header files into:                    `/usr/local/share/sdcc/include/`
+  * non-free header files into:           `/usr/local/share/sdcc/non-free/include/`
+  * library files into:                   `/usr/local/share/sdcc/lib/`
+  * non-free library files into:          `/usr/local/share/sdcc/non-free/lib/`
+  * and documentation into:               `/usr/local/share/sdcc/doc/`
 
 
 You can test the install by entering:
