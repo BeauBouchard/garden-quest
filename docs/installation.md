@@ -21,13 +21,21 @@ To run the game rom you will need to use a Game Boy Advance emulator ([mGBA](htt
 ```
 
 
-### SDCC Full Install
+
+## Additional Instructions 
+
+### SDCC Full Install 
+
+### For Windows Users
+
+You can use LCC and can skip installation, if you want you can download and run from [here](https://sdcc.sourceforge.net/snap.php#Windows). 
+
 
 ### For Linux users
 
-To install Extract the binary kit to a temporary directory.
+You can download the latest version of [SDCC here at their release page](https://sdcc.sourceforge.net/snap.php#Linux). 
 
-This will create a new directory called 'sdcc-4.3.0' in the temporary directory.
+To install Extract the binary kit to a temporary directory. This will create a new directory called 'sdcc-4.3.0' in the temporary directory.
 
 ```bash
   cd ~
@@ -59,6 +67,6 @@ You can test the install by entering:
 
 This should return sdcc's version number.
 
-Even if the default search paths look into /usr/local, sdcc is fully
-relocatable. Try `sdcc --print-search-dirs` if you have problems with header
-or library files. See sdccman.pdf for more detailed information.
+Even if the default search paths look into /usr/local, sdcc is fully relocatable. Try `sdcc --print-search-dirs` if you have problems with header or library files. See sdccman.pdf for more detailed information.
+
+Now when you can set `SDCCDIR=/usr/local` and be moving on to the next step of installing and building GBDK. 
