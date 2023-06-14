@@ -2,4 +2,6 @@
 
 extern const unsigned char FontOG[];
 
-extern UBYTE helloworldspritemap[];
+extern const unsigned char font8x8_basic[];
+
+
