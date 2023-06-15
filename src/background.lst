@@ -1,0 +1,172 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ISO C Compiler 
+                                      3 ; Version 4.2.2 #13350 (Linux)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module background
+                                      6 	.optsdcc -msm83
+                                      7 	
+                                      8 ;--------------------------------------------------------
+                                      9 ; Public variables in this module
+                                     10 ;--------------------------------------------------------
+                                     11 	.globl _BackgroundData
+                                     12 	.globl _fadeout
+                                     13 	.globl _fadein
+                                     14 	.globl _wait_vbl_done
+                                     15 	.globl _delay
+                                     16 	.globl _i
+                                     17 ;--------------------------------------------------------
+                                     18 ; special function registers
+                                     19 ;--------------------------------------------------------
+                                     20 ;--------------------------------------------------------
+                                     21 ; ram data
+                                     22 ;--------------------------------------------------------
+                                     23 	.area _DATA
+      000000                         24 _i::
+      000000                         25 	.ds 1
+                                     26 ;--------------------------------------------------------
+                                     27 ; ram data
+                                     28 ;--------------------------------------------------------
+                                     29 	.area _INITIALIZED
+                                     30 ;--------------------------------------------------------
+                                     31 ; absolute external ram data
+                                     32 ;--------------------------------------------------------
+                                     33 	.area _DABS (ABS)
+                                     34 ;--------------------------------------------------------
+                                     35 ; global & static initialisations
+                                     36 ;--------------------------------------------------------
+                                     37 	.area _HOME
+                                     38 	.area _GSINIT
+                                     39 	.area _GSFINAL
+                                     40 	.area _GSINIT
+                                     41 ;--------------------------------------------------------
+                                     42 ; Home
+                                     43 ;--------------------------------------------------------
+                                     44 	.area _HOME
+                                     45 	.area _HOME
+                                     46 ;--------------------------------------------------------
+                                     47 ; code
+                                     48 ;--------------------------------------------------------
+                                     49 	.area _CODE
+                                     50 ;background.c:6: void fadein(){
+                                     51 ;	---------------------------------
+                                     52 ; Function fadein
+                                     53 ; ---------------------------------
+      000000                         54 _fadein::
+                                     55 ;background.c:7: wait_vbl_done();
+      000000 CDr00r00         [24]   56 	call	_wait_vbl_done
+                                     57 ;background.c:10: for(i=1; i != 4; i++){
+      000003 21r00r00         [12]   58 	ld	hl, #_i
+      000006 36 01            [12]   59 	ld	(hl), #0x01
+      000008                         60 00106$:
+                                     61 ;background.c:11: switch(i){
+      000008 FAr00r00         [16]   62 	ld	a, (#_i)
+      00000B 3D               [ 4]   63 	dec	a
+      00000C 28 10            [12]   64 	jr	Z, 00101$
+      00000E FAr00r00         [16]   65 	ld	a, (#_i)
+      000011 D6 02            [ 8]   66 	sub	a, #0x02
+      000013 28 0F            [12]   67 	jr	Z, 00102$
+      000015 FAr00r00         [16]   68 	ld	a, (#_i)
+      000018 D6 03            [ 8]   69 	sub	a, #0x03
+      00001A 28 0E            [12]   70 	jr	Z, 00103$
+      00001C 18 10            [12]   71 	jr	00104$
+                                     72 ;background.c:12: case 1:
+      00001E                         73 00101$:
+                                     74 ;background.c:13: BGP_REG = 0xFE;
+      00001E 3E FE            [ 8]   75 	ld	a, #0xfe
+      000020 E0r00            [12]   76 	ldh	(_BGP_REG + 0), a
+                                     77 ;background.c:14: break;
+      000022 18 0A            [12]   78 	jr	00104$
+                                     79 ;background.c:15: case 2:
+      000024                         80 00102$:
+                                     81 ;background.c:16: BGP_REG = 0xF9;
+      000024 3E F9            [ 8]   82 	ld	a, #0xf9
+      000026 E0r00            [12]   83 	ldh	(_BGP_REG + 0), a
+                                     84 ;background.c:17: break;
+      000028 18 04            [12]   85 	jr	00104$
+                                     86 ;background.c:18: case 3:
+      00002A                         87 00103$:
+                                     88 ;background.c:19: BGP_REG = 0xE4;
+      00002A 3E E4            [ 8]   89 	ld	a, #0xe4
+      00002C E0r00            [12]   90 	ldh	(_BGP_REG + 0), a
+                                     91 ;background.c:21: }
+      00002E                         92 00104$:
+                                     93 ;background.c:22: delay(100);
+      00002E 11 64 00         [12]   94 	ld	de, #0x0064
+      000031 CDr00r00         [24]   95 	call	_delay
+                                     96 ;background.c:10: for(i=1; i != 4; i++){
+      000034 21r00r00         [12]   97 	ld	hl, #_i
+      000037 34               [12]   98 	inc	(hl)
+      000038 7E               [ 8]   99 	ld	a, (hl)
+      000039 D6 04            [ 8]  100 	sub	a, #0x04
+      00003B 20 CB            [12]  101 	jr	NZ, 00106$
+                                    102 ;background.c:24: }
+      00003D C9               [16]  103 	ret
+                                    104 ;background.c:26: void fadeout(){
+                                    105 ;	---------------------------------
+                                    106 ; Function fadeout
+                                    107 ; ---------------------------------
+      00003E                        108 _fadeout::
+                                    109 ;background.c:27: wait_vbl_done();	
+      00003E CDr00r00         [24]  110 	call	_wait_vbl_done
+                                    111 ;background.c:28: for(i = 0; i != 4; i++){
+      000041 21r00r00         [12]  112 	ld	hl, #_i
+      000044 36 00            [12]  113 	ld	(hl), #0x00
+      000046                        114 00107$:
+                                    115 ;background.c:29: switch(i){
+      000046 FAr00r00         [16]  116 	ld	a, (#_i)
+      000049 B7               [ 4]  117 	or	a, a
+      00004A 28 16            [12]  118 	jr	Z, 00101$
+      00004C FAr00r00         [16]  119 	ld	a, (#_i)
+      00004F 3D               [ 4]  120 	dec	a
+      000050 28 16            [12]  121 	jr	Z, 00102$
+      000052 FAr00r00         [16]  122 	ld	a, (#_i)
+      000055 D6 02            [ 8]  123 	sub	a, #0x02
+      000057 28 15            [12]  124 	jr	Z, 00103$
+      000059 FAr00r00         [16]  125 	ld	a, (#_i)
+      00005C D6 03            [ 8]  126 	sub	a, #0x03
+      00005E 28 14            [12]  127 	jr	Z, 00104$
+      000060 18 16            [12]  128 	jr	00105$
+                                    129 ;background.c:30: case 0:
+      000062                        130 00101$:
+                                    131 ;background.c:31: BGP_REG = 0xE4;
+      000062 3E E4            [ 8]  132 	ld	a, #0xe4
+      000064 E0r00            [12]  133 	ldh	(_BGP_REG + 0), a
+                                    134 ;background.c:32: break;
+      000066 18 10            [12]  135 	jr	00105$
+                                    136 ;background.c:33: case 1:
+      000068                        137 00102$:
+                                    138 ;background.c:34: BGP_REG = 0xF9;
+      000068 3E F9            [ 8]  139 	ld	a, #0xf9
+      00006A E0r00            [12]  140 	ldh	(_BGP_REG + 0), a
+                                    141 ;background.c:35: break;
+      00006C 18 0A            [12]  142 	jr	00105$
+                                    143 ;background.c:36: case 2:
+      00006E                        144 00103$:
+                                    145 ;background.c:37: BGP_REG = 0xFE;
+      00006E 3E FE            [ 8]  146 	ld	a, #0xfe
+      000070 E0r00            [12]  147 	ldh	(_BGP_REG + 0), a
+                                    148 ;background.c:38: break;
+      000072 18 04            [12]  149 	jr	00105$
+                                    150 ;background.c:39: case 3:
+      000074                        151 00104$:
+                                    152 ;background.c:40: BGP_REG = 0xFF;
+      000074 3E FF            [ 8]  153 	ld	a, #0xff
+      000076 E0r00            [12]  154 	ldh	(_BGP_REG + 0), a
+                                    155 ;background.c:42: }
+      000078                        156 00105$:
+                                    157 ;background.c:43: delay(100);
+      000078 11 64 00         [12]  158 	ld	de, #0x0064
+      00007B CDr00r00         [24]  159 	call	_delay
+                                    160 ;background.c:28: for(i = 0; i != 4; i++){
+      00007E 21r00r00         [12]  161 	ld	hl, #_i
+      000081 34               [12]  162 	inc	(hl)
+      000082 7E               [ 8]  163 	ld	a, (hl)
+      000083 D6 04            [ 8]  164 	sub	a, #0x04
+      000085 20 BF            [12]  165 	jr	NZ, 00107$
+                                    166 ;background.c:45: }
+      000087 C9               [16]  167 	ret
+                                    168 	.area _CODE
+      000088                        169 _BackgroundData:
+      000088 00                     170 	.db #0x00	; 0
+                                    171 	.area _INITIALIZER
+                                    172 	.area _CABS (ABS)

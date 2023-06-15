@@ -1,0 +1,69 @@
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 1
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+    .__.$$$.                                                    =  002710 L
+    .__.ABS.                                                    =  000000 G
+    .__.CPU.                                                    =  000000 L
+    .__.H$L.                                                    =  000000 L
+    _BGP_REG                                                       ****** GX
+  0 _BackgroundData                                                0007A2 GR
+  0 _BattleScene                                                   001BD9 GR
+  0 _FontOG                                                        0004BE GR
+  0 _GameOverScene                                                 001BDA GR
+  0 _GardenMap                                                     0019BB GR
+  0 _GardenSprites                                                 0010EB GR
+    _LCDC_REG                                                      ****** GX
+  0 _MapScene                                                      001BBD GR
+  0 _MenuScene                                                     001BA7 GR
+  0 _RabbitMap                                                     000F83 GR
+  0 _RabbitSprites                                                 0007A3 GR
+  0 _RunGame                                                       001BDB GR
+  0 _SplashScene                                                   001B23 GR
+  0 _StartGame                                                     001BF8 GR
+  0 ___str_0                                                       001BB3 R
+  0 ___str_1                                                       001BD0 R
+  1 _c                                                             000006 GR
+  0 _checkInput                                                    000758 GR
+    _delay                                                         ****** GX
+  0 _fadein                                                        000000 GR
+  0 _fadeout                                                       00070E GR
+  0 _font8x8_basic                                                 0000BE GR
+    _gbt_loop                                                      ****** GX
+    _gbt_play                                                      ****** GX
+    _gbt_update                                                    ****** GX
+  1 _h                                                             000003 GR
+  1 _i                                                             000004 GR
+  1 _j                                                             000005 GR
+    _joypad                                                        ****** GX
+  1 _lastspriteid                                                  000002 GR
+  0 _main                                                          001BFC GR
+  0 _player                                                        00003E GR
+    _printf                                                        ****** GX
+    _set_bkg_data                                                  ****** GX
+    _set_bkg_tiles                                                 ****** GX
+    _set_interrupts                                                ****** GX
+    _shadow_OAM                                                    ****** GX
+    _song_Data                                                     ****** GX
+    _wait_vbl_done                                                 ****** GX
+    _waitpad                                                       ****** GX
+  1 _x                                                             000000 GR
+  1 _y                                                             000001 GR
+
+
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 2
+Hexadecimal [24-Bits]
+
+Area Table
+
+   0 _CODE                                      size   1C08   flags    0
+   1 _DATA                                      size      7   flags    0
+   2 _INITIALIZED                               size      0   flags    0
+   3 _DABS                                      size      0   flags    8
+   4 _HOME                                      size      0   flags    0
+   5 _GSINIT                                    size      0   flags    0
+   6 _GSFINAL                                   size      0   flags    0
+   7 _INITIALIZER                               size      0   flags    0
+   8 _CABS                                      size      0   flags    8
+
