@@ -1,3 +1,6 @@
+#include <gb/gb.h>
+#include <stdio.h>
+
 UINT8 i;
 
 void fadein(){

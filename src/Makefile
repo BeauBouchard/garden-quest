@@ -14,19 +14,20 @@ TARGETS=gb
 LCCFLAGS_gb     = -Wm-ys -Wl-yt0x1B -autobank # Set an MBC for banking (1B-ROM+MBC5+RAM+BATT)
 LLCFLAGS_other 	= -Wa-l -Wl-m -Wl-j # Link with the small library
 LLCFLAGS_dn     = -Wa-l -c -o main.o main.c #  main.o main.c dont link just compile
+LLCFLAGS_dt     = -Wa-l -Wl-m -Wl-j -DUSE_SFR_FOR_REG -c -o 
 
 AS = $(LCC) -c
-CC = $(LCC) $(LCCFLAGS_gb)
+CC = $(LCC) $(LLCFLAGS_dt)
 
 BIN = $(PROJECT_NAME).gb
-OBJS = main.o player.o font.o splash.o background.o
+OBJS = main.o player.o font.o splash.o background.o gbt_player_bank1.o gbt_player_bank1.s
 
 all: $(BIN)
 
 # Include available build targets
 
 # Compile and link single file in one pass
-$(BIN):	main.c player.c player.h font.c font.h splash.c splash.h background.c background.h
+$(BIN):	$(OBJS)
 	$(CC) -o $@ $<
 
 clean:

@@ -7,10 +7,15 @@
 #include "font.c"
 #include "background.c"
 #include "splash.c"
+#include "gbt_player.h"
+
+extern const unsigned char * song_Data[];
+
 
 // GameState enum
 enum GameState {
   START,
+  MENU,
   MAP,
   BATTLE,
   GAMEOVER
@@ -37,6 +42,18 @@ void checkInput() {
       y++;
       move_sprite(0, x, y);
       break;
+    case J_A:
+      // interact 1
+      break;
+    case J_B:
+      // interact 2
+      break;
+    case J_START:
+      // bring up game menu
+      break;
+    case J_SELECT:
+      // mute?
+      break;
     default:
       break;
   }
@@ -44,18 +61,51 @@ void checkInput() {
 
 void SplashScene() {
   // Load splash Scene
-  set_bkg_data(0, 114, SplashSprites);
-  set_bkg_tiles(0, 0, 20, 18, SplashMap);
+  set_bkg_data(0, 126, RabbitSprites);
+  set_bkg_tiles(0, 0, 20, 18, RabbitMap);
+
   SHOW_BKG;
   DISPLAY_ON;
   // fade in
   fadein();
   // wait for input from start button
-  waitpad(J_DOWN);
+  delay(1000);
+  // fade out
+  fadeout();
+  // Load splash Scene
+  set_bkg_data(0, 141, GardenSprites);
+  set_bkg_tiles(0, 0, 20, 18, GardenMap);
+  fadein();
+    disable_interrupts();
+    gbt_play(song_Data, 2, 7);
+    gbt_loop(1);
+
+    set_interrupts(VBL_IFLAG);
+    enable_interrupts();
+
+    while (1)
+    {
+        wait_vbl_done();
+
+        // your game code here
+        waitpad(J_START);
+        fadeout();
+        MenuScene();
+
+        gbt_update(); // This will change to ROM bank 1.
+    }
+  // wait for input from start button
+}
+
+void MenuScene() {
+  fadein();
+  printf("MenuScene");
+  // display menu
 }
 
 void MapScene() {
   // fade out
+  printf("MapScene");
   
   // Load map Scene
   // set_bkg_data(0, 4, MazeSprites);
@@ -90,15 +140,19 @@ void RunGame(UINT8 gameState) {
       // Load splash Scene
       SplashScene();
       break;
-    case 1: // 1
+    case 1: // 0
+      // Load splash Scene
+      SplashScene();
+      break;
+    case 2: // 1
       // Load splash Scene
       MapScene();
       break;
-    case 2: // 2
+    case 3: // 2
       // Load game Scene
       BattleScene();
       break;
-    case 3: // 3
+    case 4: // 3
       // Load gameover Scene
       GameOverScene();
       break;
