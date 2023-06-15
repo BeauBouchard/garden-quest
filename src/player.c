@@ -1,3 +1,14 @@
+#include <gb/gb.h>
+
+//generical character structure: id, position, graphics
+struct GameCharacter {
+	UBYTE spritids[4]; // all characters use 4 sprites
+	UINT8 x;
+	UINT8 y;
+	UINT8 width;
+	UINT8 height;
+};
+
 const unsigned char player[] = {
   0x00,0x00,0x00,0x00,0x01,0x01,0x01,0x01,
   0x03,0x00,0x06,0x01,0x06,0x03,0x07,0x03,

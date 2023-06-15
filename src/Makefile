@@ -19,14 +19,14 @@ AS = $(LCC) -c
 CC = $(LCC) $(LCCFLAGS_gb)
 
 BIN = $(PROJECT_NAME).gb
-OBJS = main.o player.o font.o
+OBJS = main.o player.o font.o splash.o background.o
 
 all: $(BIN)
 
 # Include available build targets
 
 # Compile and link single file in one pass
-$(BIN):	main.c player.c player.h font.c font.h
+$(BIN):	main.c player.c player.h font.c font.h splash.c splash.h background.c background.h
 	$(CC) -o $@ $<
 
 clean:
