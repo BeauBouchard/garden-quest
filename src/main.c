@@ -7,9 +7,6 @@
 #include "font.c"
 #include "background.c"
 #include "splash.c"
-#include "gbt_player.h"
-
-extern const unsigned char * song_Data[];
 
 
 // GameState enum
@@ -21,7 +18,21 @@ enum GameState {
   GAMEOVER
 };
 
-UINT8 x, y, lastspriteid, h, i, j, c;
+// Scene struct
+struct Scene {
+  UBYTE spriteData[];
+  UBYTE spriteMap[];
+  UBYTE backgroundData[];
+  UBYTE backgroundMap[];
+};
+
+// GameState struct
+
+
+
+UINT8 x, y, lastspriteid, h, i, j, c, menuOpen, mainMenuPosition, mapOpen;
+
+
 
 
 void checkInput() {
@@ -61,7 +72,7 @@ void checkInput() {
 
 void SplashScene() {
   // Load splash Scene
-  set_bkg_data(0, 126, RabbitSprites);
+  set_bkg_data(0, 181, RabbitSprites);
   set_bkg_tiles(0, 0, 20, 18, RabbitMap);
 
   SHOW_BKG;
@@ -73,34 +84,114 @@ void SplashScene() {
   // fade out
   fadeout();
   // Load splash Scene
-  set_bkg_data(0, 141, GardenSprites);
+  set_bkg_data(0, 255, GardenSprites);
   set_bkg_tiles(0, 0, 20, 18, GardenMap);
   fadein();
-    disable_interrupts();
-    gbt_play(song_Data, 2, 7);
-    gbt_loop(1);
 
-    set_interrupts(VBL_IFLAG);
-    enable_interrupts();
-
-    while (1)
-    {
-        wait_vbl_done();
-
-        // your game code here
-        waitpad(J_START);
-        fadeout();
-        MenuScene();
-
-        gbt_update(); // This will change to ROM bank 1.
-    }
   // wait for input from start button
+  waitpad(J_START);
+  fadeout();
+  MenuScene();
+}
+
+void RenderCursor() {
+  // render cursor
+  set_sprite_data(17, 35, FontOG); // load font data
+  set_sprite_tile(0, 42); // set tile to cursor
+  SHOW_SPRITES;
+  DISPLAY_ON;
+  if(mainMenuPosition < 1) {
+    mainMenuPosition = 4;
+  }
+  if(mainMenuPosition > 4) {
+    mainMenuPosition = 1;
+  }
+  switch (mainMenuPosition) {
+    case 1:
+      // start new game
+      move_sprite(0, 26, 80);
+      break;
+    case 2:
+      // help / controls
+      move_sprite(0, 26, 100);
+      break;
+    case 3:
+      // credits
+      move_sprite(0, 26, 120);
+      break;
+    case 4:
+      // exit
+      move_sprite(0, 26, 140);
+      break;
+    default:
+      // do nothing
+      break;
+  }
+}
+
+void SelectMenuItem() {
+  switch (mainMenuPosition) {
+    case 1:
+      // start new game
+      printf("MenuScene - start new game");
+      break;
+    case 2:
+      // help / controls
+      printf("MenuScene - help / controls");
+      break;
+    case 3:
+      // credits
+      printf("MenuScene - credits");
+      break;
+    case 4:
+      printf("MenuScene - exit");
+      fadeout();
+      exit(0);
+      // exit
+      break;
+    default:
+      // do nothing
+      break;
+  }
+}
+
+void CheckMenuInput() {
+  RenderCursor();
+  switch (joypad()) {
+    case J_UP:
+      // move cursor up
+      mainMenuPosition--;
+      break;
+    case J_DOWN:
+      // move cursor down
+      mainMenuPosition++;
+      break;
+    case J_A:
+      // select
+      menuOpen = 0;
+      SelectMenuItem();
+      break;
+    default:
+      // do nothing
+      break;
+  }
 }
 
 void MenuScene() {
+  set_bkg_data(0, 83, MainMenuSprites);
+  set_bkg_tiles(0, 0, 20, 18, MainMenuMap);
   fadein();
-  printf("MenuScene");
-  // display menu
+
+  UINT8 currentMenuPosition = 0;
+
+  // build menu from sprites
+  menuOpen = 1;
+
+  // menu loop
+  while(menuOpen) {
+    CheckMenuInput();
+    delay(100);
+  }
 }
 
 void MapScene() {
@@ -116,9 +207,11 @@ void MapScene() {
   
 
   // map loop
-  while(1) {
+  while(mapOpen) {
     checkInput();
     delay(10);
+    // Done processing, yield CPU and wait for start of next frame
+    wait_vbl_done();
   }
 }
 
@@ -165,6 +258,9 @@ void StartGame() {
 }
 
 void main() {
+  menuOpen = 0;
+  mapOpen = 0;
+  mainMenuPosition = 1;
   SPRITES_8x8;
   fadeout();
   StartGame();
