@@ -17,10 +17,10 @@ LLCFLAGS_dn     = -Wa-l -c -o main.o main.c #  main.o main.c dont link just comp
 LLCFLAGS_dt     = -Wa-l -Wl-m -Wl-j -DUSE_SFR_FOR_REG -c -o 
 
 AS = $(LCC) -c
-CC = $(LCC) $(LLCFLAGS_dt)
+CC = $(LCC) $(LCCFLAGS_gb)
 
 BIN = $(PROJECT_NAME).gb
-OBJS = main.o player.o font.o splash.o background.o gbt_player_bank1.o gbt_player_bank1.s
+OBJS = main.o player.o font.o splash.o background.o 
 
 all: $(BIN)
 
