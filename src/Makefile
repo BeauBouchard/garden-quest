@@ -16,18 +16,16 @@ LLCFLAGS_other 	= -Wa-l -Wl-m -Wl-j # Link with the small library
 LLCFLAGS_dn     = -Wa-l -c -o main.o main.c #  main.o main.c dont link just compile
 LLCFLAGS_dt     = -Wa-l -Wl-m -Wl-j -DUSE_SFR_FOR_REG -c -o 
 
-
 AS = $(LCC) -c
 CC = $(LCC) $(LCCFLAGS_gb)
 
 BIN = $(PROJECT_NAME).gb
-OBJS = main.o Background.o Font.o 
-
+OBJS =  main.o Background.o Font.o 
 
 all: $(BIN)
 
 $(BIN): $(OBJS)
-	$(CC) -o main main.o Background.o Font.o
+	$(CC) -o $(BIN) main.o Background.o Font.o
 
 main.o: main.c Background.h Font.h
 	$(CC) -c main.c
@@ -38,13 +36,14 @@ Background.o: Background.c Background.h
 Font.o: Font.c Font.h
 	$(CC) -c Font.c
 
+# Include available build targets - Compile and link single file in one pass
+# -o flag specifies the output file
+# $@ evaluates to the target (the .o file)
+# $< evaluates to the first prerequisite (the .c file)
+# $(BIN): $(OBJS)
+# 	$(CC) -o $@ $<
+
 clean:
 	sh ./utils/clean.sh
-
-# Include available build targets
-
-# Compile and link single file in one pass
-# $(BIN):	$(OBJS)
-# 	$(CC) -o $@ $<
 
 
