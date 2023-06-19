@@ -16,11 +16,12 @@ LLCFLAGS_other 	= -Wa-l -Wl-m -Wl-j # Link with the small library
 LLCFLAGS_dn     = -Wa-l -c -o main.o main.c #  main.o main.c dont link just compile
 LLCFLAGS_dt     = -Wa-l -Wl-m -Wl-j -DUSE_SFR_FOR_REG -c -o 
 
+
 AS = $(LCC) -c
 CC = $(LCC) $(LCCFLAGS_gb)
 
 BIN = $(PROJECT_NAME).gb
-OBJS = main.o player.o font.o splash.o background.o 
+OBJS = main.c Background.c Background.o Font.c Font.o 
 
 all: $(BIN)
 
@@ -31,4 +32,4 @@ $(BIN):	$(OBJS)
 	$(CC) -o $@ $<
 
 clean:
-	rm -f *.o *.lst *.map *.gb *~ *.rel *.cdb *.ihx *.lnk *.sym *.asm *.noi
+	sh ./utils/clean.sh

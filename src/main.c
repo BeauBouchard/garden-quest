@@ -3,37 +3,33 @@
 #include <stdlib.h>
 #include <string.h>
 #include <rand.h>
-#include "player.c"
-#include "font.c"
-#include "background.c"
-#include "splash.c"
+#include "Font.h"
+#include "Background.h"
 
+// // GameState enum
+// enum GameState {
+//   START,
+//   MENU,
+//   MAP,
+//   BATTLE,
+//   GAMEOVER
+// };
 
-// GameState enum
-enum GameState {
-  START,
-  MENU,
-  MAP,
-  BATTLE,
-  GAMEOVER
-};
+// // Scene struct
+// struct Scene {
+//   UBYTE spriteData[128];
+//   UBYTE spriteMap[128];
+//   UBYTE backgroundData[128];
+//   UBYTE backgroundMap[128];
+// };
 
-// Scene struct
-struct Scene {
-  UBYTE spriteData[];
-  UBYTE spriteMap[];
-  UBYTE backgroundData[];
-  UBYTE backgroundMap[];
-};
-
-// GameState struct
-
-
+// // GameState struct
+// struct GameState {
+//   enum GameState state;
+//   struct Scene scenes[];
+// };
 
 UINT8 x, y, lastspriteid, h, i, j, c, menuOpen, mainMenuPosition, mapOpen;
-
-
-
 
 void checkInput() {
   switch (joypad()) {
