@@ -21,15 +21,30 @@ AS = $(LCC) -c
 CC = $(LCC) $(LCCFLAGS_gb)
 
 BIN = $(PROJECT_NAME).gb
-OBJS = main.c Background.c Background.o Font.c Font.o 
+OBJS = main.o Background.o Font.o 
+
 
 all: $(BIN)
+
+$(BIN): $(OBJS)
+	$(CC) -o main main.o Background.o Font.o
+
+main.o: main.c Background.h Font.h
+	$(CC) -c main.c
+
+Background.o: Background.c Background.h
+	$(CC) -c Background.c
+
+Font.o: Font.c Font.h
+	$(CC) -c Font.c
+
+clean:
+	sh ./utils/clean.sh
 
 # Include available build targets
 
 # Compile and link single file in one pass
-$(BIN):	$(OBJS)
-	$(CC) -o $@ $<
+# $(BIN):	$(OBJS)
+# 	$(CC) -o $@ $<
 
-clean:
-	sh ./utils/clean.sh
+

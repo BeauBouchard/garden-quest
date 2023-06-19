@@ -3,14 +3,13 @@
 
 #include "Background.h"
 
-UINT8 i;
-
+UINT8 l;
 void fadein() {
 	wait_vbl_done();
 	// its changing the palette for the background switching each colour in the palette to white step by step
 	// dont need to start at all back as will have been set that by fadeout
-	for(i=1; i != 4; i++){
-		switch(i){
+	for(l=1; l != 4; l++){
+		switch(l){
 			case 1:
 				BGP_REG = 0xFE;
 				break;
@@ -27,8 +26,8 @@ void fadein() {
 
 void fadeout() {
 	wait_vbl_done();	
-	for(i = 0; i != 4; i++){
-		switch(i){
+	for(l = 0; l != 4; l++){
+		switch(l){
 			case 0:
 				BGP_REG = 0xE4;
 				break;
