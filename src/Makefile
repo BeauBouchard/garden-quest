@@ -20,12 +20,12 @@ AS = $(LCC) -c
 CC = $(LCC) $(LCCFLAGS_gb)
 
 BIN = $(PROJECT_NAME).gb
-OBJS =  main.o Background.o Font.o 
+OBJS =  main.o Background.o Font.o Music.o Sound.o
 
 all: $(BIN)
 
 $(BIN): $(OBJS)
-	$(CC) -o $(BIN) main.o Background.o Font.o
+	$(CC) -o $(BIN) main.o Background.o Font.o Music.o Sound.o 
 
 main.o: main.c Background.h Font.h
 	$(CC) -c main.c
@@ -35,6 +35,15 @@ Background.o: Background.c Background.h
 
 Font.o: Font.c Font.h
 	$(CC) -c Font.c
+
+Music.o: Music.c Music.h
+	$(CC) -c Music.c
+
+Sound.o: Sound.c Sound.h Music.c Music.h
+	$(CC) -c Sound.c
+
+
+
 
 # Include available build targets - Compile and link single file in one pass
 # -o flag specifies the output file
