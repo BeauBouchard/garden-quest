@@ -11,7 +11,7 @@ LCC = $(GBDK_PATH)bin/lcc
 TARGETS=gb
 
 # Configure platform specific LCC flags here:
-LCCFLAGS_gb     = -Wm-ys -Wl-yt0x1B -autobank # Set an MBC for banking (1B-ROM+MBC5+RAM+BATT)
+LCCFLAGS_gb     = -Wm-ys -Wl-yt0x1B -autobank -DMUSIC_DRIVER_GBT # Set an MBC for banking (1B-ROM+MBC5+RAM+BATT)
 LLCFLAGS_other 	= -Wa-l -Wl-m -Wl-j # Link with the small library
 LLCFLAGS_dn     = -Wa-l -c -o main.o main.c #  main.o main.c dont link just compile
 LLCFLAGS_dt     = -Wa-l -Wl-m -Wl-j -DUSE_SFR_FOR_REG -c -o 
@@ -20,27 +20,29 @@ AS = $(LCC) -c
 CC = $(LCC) $(LCCFLAGS_gb)
 
 BIN = $(PROJECT_NAME).gb
-OBJS =  main.o Background.o Font.o Music.o Sound.o
+OBJS =  main.o Background.o Font.o 
 
 all: $(BIN)
 
 $(BIN): $(OBJS)
-	$(CC) -o $(BIN) main.o Background.o Font.o Music.o Sound.o 
+	$(CC) -o $(BIN) main.o Background.o Font.o 
 
-main.o: main.c Background.h Font.h
+main.o: main.c Background.h Font.h Music.h 
+	@echo compiling $<
 	$(CC) -c main.c
 
 Background.o: Background.c Background.h
+	@echo compiling $<
 	$(CC) -c Background.c
 
 Font.o: Font.c Font.h
+	@echo compiling $<
 	$(CC) -c Font.c
 
-Music.o: Music.c Music.h
-	$(CC) -c Music.c
-
-Sound.o: Sound.c Sound.h Music.c Music.h
-	$(CC) -c Sound.c
+# This is broken, I need to figure out how to compile the music driver
+# Music.o: Music.c gbt_player.h gbt_player.s gbt_player_bank1.s Music.h
+# 	@echo compiling $<
+# 	$(CC) -c Music.c
 
 
 

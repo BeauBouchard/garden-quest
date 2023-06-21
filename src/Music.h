@@ -9,22 +9,7 @@ extern UINT8 stop_music_on_new_state;
 void __PlayMusic(void* music, unsigned char bank, unsigned char loop);
 void MusicCallback() __nonbanked;
 
-#ifdef MUSIC_DRIVER_HUGE
-	#include "hUGEDriver.h"
 
-	extern BYTE hUGE_paused;
-	void hUGE_mute(UBYTE mute);
-
-	#define INIT_MUSIC hUGE_init(0)
-	#define DECLARE_MUSIC(SONG) extern const void __bank_ ## SONG ## _uge; extern const hUGESong_t SONG ## _uge
-	#define PlayMusic(SONG, LOOP) __PlayMusic(&SONG ## _uge, (uint8_t)&__bank_ ## SONG ## _uge, 0)
-	#define StopMusic hUGE_paused = 1; hUGE_mute(HT_CH_MUTE); last_music = 0
-
-	#define MUTE_CHANNEL(CHANNEL) if(last_music) hUGE_mute_channel(CHANNEL, HT_CH_MUTE)
-	#define UNMUTE_ALL_CHANNELS hUGE_mute(HT_CH_PLAY)
-#endif
-
-#ifdef MUSIC_DRIVER_GBT
 	#include "gbt_player.h"
 	#include "BankManager.h"
 
@@ -35,6 +20,21 @@ void MusicCallback() __nonbanked;
 
 	#define MUTE_CHANNEL(CHANNEL) gbt_enable_channels(~(0xF & (1 << CHANNEL)))
 	#define UNMUTE_ALL_CHANNELS gbt_enable_channels(0xF)
+
+
 #endif
+
+#ifndef SOUND_H
+#define SOUND_H
+
+typedef enum {
+	CHANNEL_1,
+	CHANNEL_2,
+	CHANNEL_3,
+	CHANNEL_4,
+	CHANNEL_5
+} SOUND_CHANNEL;
+
+void PlayFx(SOUND_CHANNEL channel, UINT8 mute_frames, ...);
 
 #endif
