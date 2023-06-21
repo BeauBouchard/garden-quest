@@ -90,7 +90,7 @@ void SplashScene() {
   MenuScene();
 }
 
-void RenderCursor() {
+void MainMenuRenderCursor() {
   // render cursor
   set_sprite_data(17, 35, FontOG); // load font data
   set_sprite_tile(0, 42); // set tile to cursor
@@ -125,7 +125,29 @@ void RenderCursor() {
   }
 }
 
-void SelectMenuItem() {
+void MainMenuCheckMenuInput() {
+  MainMenuRenderCursor();
+  switch (joypad()) {
+    case J_UP:
+      // move cursor up
+      mainMenuPosition--;
+      break;
+    case J_DOWN:
+      // move cursor down
+      mainMenuPosition++;
+      break;
+    case J_A:
+      // select
+      menuOpen = 0;
+      MainMenuSelectMenuItem();
+      break;
+    default:
+      // do nothing
+      break;
+  }
+}
+
+void MainMenuSelectMenuItem() {
   switch (mainMenuPosition) {
     case 1:
       // start new game
@@ -151,27 +173,8 @@ void SelectMenuItem() {
   }
 }
 
-void CheckMenuInput() {
-  RenderCursor();
-  switch (joypad()) {
-    case J_UP:
-      // move cursor up
-      mainMenuPosition--;
-      break;
-    case J_DOWN:
-      // move cursor down
-      mainMenuPosition++;
-      break;
-    case J_A:
-      // select
-      menuOpen = 0;
-      SelectMenuItem();
-      break;
-    default:
-      // do nothing
-      break;
-  }
-}
+
+
 
 void MenuScene() {
   set_bkg_data(0, 83, MainMenuSprites);
@@ -185,7 +188,7 @@ void MenuScene() {
 
   // menu loop
   while(menuOpen) {
-    CheckMenuInput();
+    MainMenuCheckMenuInput();
     delay(100);
   }
 }

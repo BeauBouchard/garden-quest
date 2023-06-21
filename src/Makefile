@@ -24,6 +24,15 @@ OBJS =  main.o Background.o Font.o
 
 all: $(BIN)
 
+# Include available build targets - Compile and link single file in one pass
+# -o flag specifies the output file
+# $@ evaluates to the target (the .o file)
+# $< evaluates to the first prerequisite (the .c file)
+# $(BIN): $(OBJS)
+# 	$(CC) -o $@ $<
+
+
+# Manually target objects
 $(BIN): $(OBJS)
 	$(CC) -o $(BIN) main.o Background.o Font.o 
 
@@ -40,19 +49,11 @@ Font.o: ./Graphics/Font.c ./Graphics/Font.h
 	$(CC) -c ./Graphics/Font.c
 
 # This is broken, I need to figure out how to compile the music driver
-# Music.o: Music.c gbt_player.h gbt_player.s gbt_player_bank1.s Music.h
+# Music.o: Music.c ./Music/gbt_player.h ./Music/gbt_player.s ./Music/gbt_player_bank1.s ./Music/Music.h
 # 	@echo compiling $<
-# 	$(CC) -c Music.c
+# 	$(CC) -c ./Music/Music.c
 
 
-
-
-# Include available build targets - Compile and link single file in one pass
-# -o flag specifies the output file
-# $@ evaluates to the target (the .o file)
-# $< evaluates to the first prerequisite (the .c file)
-# $(BIN): $(OBJS)
-# 	$(CC) -o $@ $<
 
 clean:
 	sh ./utils/clean.sh
