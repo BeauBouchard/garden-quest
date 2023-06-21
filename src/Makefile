@@ -27,17 +27,17 @@ all: $(BIN)
 $(BIN): $(OBJS)
 	$(CC) -o $(BIN) main.o Background.o Font.o 
 
-main.o: main.c Background.h Font.h Music.h 
+main.o: main.c ./Graphics/Background.h ./Graphics/Font.h
 	@echo compiling $<
 	$(CC) -c main.c
 
-Background.o: Background.c Background.h
+Background.o: ./Graphics/Background.c ./Graphics/Background.h
 	@echo compiling $<
-	$(CC) -c Background.c
+	$(CC) -c ./Graphics/Background.c
 
-Font.o: Font.c Font.h
+Font.o: ./Graphics/Font.c ./Graphics/Font.h
 	@echo compiling $<
-	$(CC) -c Font.c
+	$(CC) -c ./Graphics/Font.c
 
 # This is broken, I need to figure out how to compile the music driver
 # Music.o: Music.c gbt_player.h gbt_player.s gbt_player_bank1.s Music.h

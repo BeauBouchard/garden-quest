@@ -9,7 +9,6 @@ extern const unsigned char RabbitMap[];
 extern const unsigned char GardenSprites[];
 extern const unsigned char GardenMap[];
 
-
 extern void fadein();
 extern void fadeout();
 

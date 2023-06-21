@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <rand.h>
-#include "Font.h"
-#include "Background.h"
+#include "./Graphics/Font.h"
+#include "./Graphics/Background.h"
 
 // // GameState enum
 // enum GameState {
