@@ -3,37 +3,33 @@
 #include <stdlib.h>
 #include <string.h>
 #include <rand.h>
-#include "player.c"
-#include "font.c"
-#include "background.c"
-#include "splash.c"
+#include "./Graphics/Font.h"
+#include "./Graphics/Background.h"
 
+// // GameState enum
+// enum GameState {
+//   START,
+//   MENU,
+//   MAP,
+//   BATTLE,
+//   GAMEOVER
+// };
 
-// GameState enum
-enum GameState {
-  START,
-  MENU,
-  MAP,
-  BATTLE,
-  GAMEOVER
-};
+// // Scene struct
+// struct Scene {
+//   UBYTE spriteData[128];
+//   UBYTE spriteMap[128];
+//   UBYTE backgroundData[128];
+//   UBYTE backgroundMap[128];
+// };
 
-// Scene struct
-struct Scene {
-  UBYTE spriteData[];
-  UBYTE spriteMap[];
-  UBYTE backgroundData[];
-  UBYTE backgroundMap[];
-};
-
-// GameState struct
-
-
+// // GameState struct
+// struct GameState {
+//   enum GameState state;
+//   struct Scene scenes[];
+// };
 
 UINT8 x, y, lastspriteid, h, i, j, c, menuOpen, mainMenuPosition, mapOpen;
-
-
-
 
 void checkInput() {
   switch (joypad()) {
@@ -94,7 +90,7 @@ void SplashScene() {
   MenuScene();
 }
 
-void RenderCursor() {
+void MainMenuRenderCursor() {
   // render cursor
   set_sprite_data(17, 35, FontOG); // load font data
   set_sprite_tile(0, 42); // set tile to cursor
@@ -129,7 +125,29 @@ void RenderCursor() {
   }
 }
 
-void SelectMenuItem() {
+void MainMenuCheckMenuInput() {
+  MainMenuRenderCursor();
+  switch (joypad()) {
+    case J_UP:
+      // move cursor up
+      mainMenuPosition--;
+      break;
+    case J_DOWN:
+      // move cursor down
+      mainMenuPosition++;
+      break;
+    case J_A:
+      // select
+      menuOpen = 0;
+      MainMenuSelectMenuItem();
+      break;
+    default:
+      // do nothing
+      break;
+  }
+}
+
+void MainMenuSelectMenuItem() {
   switch (mainMenuPosition) {
     case 1:
       // start new game
@@ -155,27 +173,8 @@ void SelectMenuItem() {
   }
 }
 
-void CheckMenuInput() {
-  RenderCursor();
-  switch (joypad()) {
-    case J_UP:
-      // move cursor up
-      mainMenuPosition--;
-      break;
-    case J_DOWN:
-      // move cursor down
-      mainMenuPosition++;
-      break;
-    case J_A:
-      // select
-      menuOpen = 0;
-      SelectMenuItem();
-      break;
-    default:
-      // do nothing
-      break;
-  }
-}
+
+
 
 void MenuScene() {
   set_bkg_data(0, 83, MainMenuSprites);
@@ -189,7 +188,7 @@ void MenuScene() {
 
   // menu loop
   while(menuOpen) {
-    CheckMenuInput();
+    MainMenuCheckMenuInput();
     delay(100);
   }
 }

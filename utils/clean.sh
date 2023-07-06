@@ -1,0 +1,1 @@
+rm -f *.o *.lst *.map *~ *.rel *.cdb *.ihx *.lnk *.sym *.asm *.noi
